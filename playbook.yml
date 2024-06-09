@@ -19,4 +19,5 @@
             api_args:
               chat_id: "{{ telegram_chat_id }}"
               text: "Task failed"
+              parse_mode: "markdown"
             
