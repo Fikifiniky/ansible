@@ -2,10 +2,20 @@
   hosts: servers
   become: yes
   tasks:
-    - name: Update apt cache
-      apt:
-        update_cache: yes
+    - name: Error Block Handle
+      block:
+        - name: Update apt cache
+          apt:
+            update_cache: yes
 
-    - name: Upgrade all packages
-      apt:
-        upgrade: dist
+        - name: Upgrade all packages
+          apt:
+            upgrade: dist
+      rescue:
+        - name: "Error Occured"
+          ansible.builtin.uri:
+          url: "https://api.telegram.org/bot{{ telegram_token }}/sendMessage?chat_id={{ telegram_chat_id }}&text={{ ansible_play_name }}+Failed"
+          method: POST
+          headers:
+            Content-Type: "application/json"
+          body_format: json
