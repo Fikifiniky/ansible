@@ -14,8 +14,6 @@
 
   post_tasks:
     - name: Notify via Telegram after all tasks complete
-      delegate_to: localhost
-      run_once: yes
       community.general.telegram:
         token: "{{ telegram_token }}"
         api_args:
