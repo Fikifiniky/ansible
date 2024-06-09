@@ -2,7 +2,7 @@
   hosts: servers
   become: yes
   tasks:
-    - name: Error Block Handle
+    - name: Update and upgrade packages
       block:
         - name: Update apt cache
           apt:
@@ -11,12 +11,12 @@
         - name: Upgrade all packages
           apt:
             upgrade: dist
+
       rescue:
-        - name: "Error Occured"
-          ansible.builtin.uri:
-            delegate_to: 127.0.0.1
-            url: "https://api.telegram.org/bot{{ telegram_token }}/sendMessage?chat_id={{ telegram_chat_id }}&text={{ ansible_play_name }}+Failed"
-            method: POST
-            headers:
-              Content-Type: "application/json"
-            body_format: json
+        - name: Telegram
+          community.general.telegram:
+            token: {{ telegram_token }}
+            api_args:
+              chat_id: {{ telegram_chat_id }}
+              text: "Task failed"
+            
