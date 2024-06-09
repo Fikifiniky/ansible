@@ -12,7 +12,7 @@
           apt:
             upgrade: dist
 
-      rescue:
+      always:
         - name: Telegram
           community.general.telegram:
             token: "{{ telegram_token }}"
