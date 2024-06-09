@@ -21,5 +21,5 @@
         token: "{{ telegram_token }}"
         api_args:
           chat_id: "{{ telegram_chat_id }}"
-          text: "Task successful {{ ansible_play_name }}"
+          text: "Task successful *{{ ansible_play_name }}*"
           parse_mode: "markdown"
