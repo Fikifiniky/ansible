@@ -16,6 +16,7 @@
     - name: Notify via Telegram after all tasks complete
       delegate_to: 127.0.0.1
       run_once: yes
+      become: no
       community.general.telegram:
         token: "{{ telegram_token }}"
         api_args:
